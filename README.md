@@ -4,4 +4,6 @@ The code from last night at The Dev Bakery, where I tried to make a to-do list a
 
 The issue I had with binding is now fixed :)
 
+[View demo](https://github.com/joecritch/intro-to-react-demo/blob/master/README.md)
+
 —Joe
