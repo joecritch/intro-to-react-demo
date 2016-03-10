@@ -6,8 +6,10 @@
 </head>
 <body>
 
+  <!-- This is your mounting point, used at the bottom with ReactDOM.render -->
   <div id="app"></div>
 
+  <!-- No need to introduce tooling at this stage. Go CDN crazy ;-) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
   <script src="https://fb.me/react-0.14.7.js"></script>
   <script src="https://fb.me/react-dom-0.14.7.js"></script>
@@ -18,6 +20,9 @@
       return { items: [ 'react', 'redux', 'flux' ] }
     },
     onButtonClick: function(key) {
+      // Let's create a new items array
+      // but removing the key of the one which we clicked.
+      // (We pass in the key during the render "map" loop.)
       var items = this.state.items;
       this.setState({
         items: items.filter(function(item, ii) {
@@ -26,6 +31,8 @@
       });
     },
     onFormSubmit: function(e) {
+      // Add a new item to the state
+      // and reset the text input's "value" DOM attribute
       e.preventDefault();
       var items = this.state.items.slice(0);
       items.push(this.refs.input.value);
@@ -34,12 +41,16 @@
         items: items
       });
     },
+    /**
+     * This is your render callback. It's called every time this.setState is called on this (or parent) component
+     // ... or if ReactDOM.render is called on the root.
+     */
     render: function() {
       return (
         <div>
           <h1>To-do list, lol</h1>
-          <form onSubmit={this.onFormSubmit}>
-            <input type="text" ref="input" />
+          <form onSubmit={this.onFormSubmit}> // < event handlers are auto-binded with "this"
+            <input type="text" ref="input" /> // < you can "ref" a DOM node, and access it with this.refs.input later.
           </form>
           <ul>
             {this.state.items.map(function(item, key) {
@@ -50,6 +61,8 @@
                 }.bind(this)}>Complete</button>
               </li>);
             }.bind(this))}
+            // ^ you'll need to do .bind(this) whenever you
+            // create an anonymous funciton inside of a class method
           </ul>
         </div>
       );
